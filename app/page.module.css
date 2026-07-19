@@ -1,0 +1,52 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.trips {
+  padding-bottom: 96px;
+}
+
+.tripsHead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 0 36px;
+  border-top: 2px solid var(--ink);
+}
+
+.tripsTitle {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-transform: uppercase;
+}
+
+.tripsSub {
+  color: var(--sand);
+  font-size: 1.05rem;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+/* Two per row on desktop; the cards wrap to one per row when they no longer fit. */
+.grid > * {
+  flex: 1 1 460px;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    gap: 22px;
+  }
+}

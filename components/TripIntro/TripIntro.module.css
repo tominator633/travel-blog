@@ -1,0 +1,81 @@
+.intro {
+  padding: 56px 0 48px;
+  max-width: 760px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 36px;
+  transition: color 0.18s ease;
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.heading {
+  font-weight: 900;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  text-transform: uppercase;
+}
+
+.body {
+  margin-top: 26px;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+}
+
+.facts {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 44px;
+  padding-top: 32px;
+  border-top: 2px solid var(--ink);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.factLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+.factValue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.hotelLink {
+  color: var(--accent);
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.18s ease;
+}
+
+.hotelLink:hover {
+  border-color: var(--accent);
+}
