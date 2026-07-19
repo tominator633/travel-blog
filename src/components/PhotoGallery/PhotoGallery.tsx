@@ -49,33 +49,36 @@ export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) 
   return (
     <>
       <ul className={styles.grid}>
-        {photos.map((photo, i) => (
-          <li key={photo.src} className={styles.item}>
-            <button
-              type="button"
-              className={styles.trigger}
-              onClick={() => setOpenIndex(i)}
-              aria-label={`Open photo: ${photo.alt}`}
-            >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill // Změna: Použijeme fill pro flexibilní čtverec
-                sizes="(max-width: 760px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className={styles.img}
-                loading="lazy"
-                decoding="async"
-              />
-              {photo.caption && (
-                <span className={styles.caption}>{photo.caption}</span>
-              )}
-              <span className={styles.expand} aria-hidden="true">
-                View
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+  {photos.map((photo, i) => (
+    <li key={photo.src} className={styles.item}>
+      <button
+        type="button"
+        className={styles.trigger}
+        onClick={() => setOpenIndex(i)}
+        aria-label={`Open photo: ${photo.alt}`}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          // ZMĚNA: Místo fill předáme reálné rozměry. Next.js podle nich vypočítá 
+          // správný poměr stran a CSS zařídí, aby se fotka přizpůsobila šířce sloupce.
+          width={photo.width}
+          height={photo.height}
+          sizes="(max-width: 760px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={styles.img}
+          loading="lazy"
+          decoding="async"
+        />
+        {photo.caption && (
+          <span className={styles.caption}>{photo.caption}</span>
+        )}
+        <span className={styles.expand} aria-hidden="true">
+          View
+        </span>
+      </button>
+    </li>
+  ))}
+</ul>
 
       {isOpen && active && (
         <div

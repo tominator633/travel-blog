@@ -17,12 +17,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Wanderlines — A Travel Blog',
+  title: 'T-Rex on the go',
   description:
     'Field notes, photos, and stories from trips around the world. One journey at a time.',
   generator: 'v0.app',
   openGraph: {
-    title: 'Wanderlines — A Travel Blog',
+    title: 'T-Rex on the go',
     description:
       'Field notes, photos, and stories from trips around the world.',
     type: 'website',

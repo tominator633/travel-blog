@@ -45,7 +45,8 @@ export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryP
     })
 
     const photos: CloudinaryPhoto[] = result.resources.map((resource: any) => ({
-      src: getOptimizedImageUrl(resource.public_id, { width: 900, height: 600, crop: 'fill' }),
+      // ZMĚNA: Pouze omezíme max šířku na 1000px, výšku a ořez fill vymažeme, aby zůstal zachován poměr stran
+      src: getOptimizedImageUrl(resource.public_id, { width: 1000 }), 
       alt: `Fotka z výletu ${folderId}`,
       createdAt: resource.exif?.DateTimeOriginal || resource.created_at,
       width: resource.width || 1200,

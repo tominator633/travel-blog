@@ -41,7 +41,7 @@ export default function Intro() {
         <div className={styles.frame}>
           <Image
             src="/images/profile.jpeg"
-            alt="Sam standing on a mountain overlook at golden hour"
+            alt="Tomas at Angkor Wat"
             fill
             sizes="(max-width: 900px) 80vw, 420px"
             className={styles.photo}

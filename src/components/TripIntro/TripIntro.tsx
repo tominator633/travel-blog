@@ -30,15 +30,23 @@ export default function TripIntro({ trip }: { trip: Trip }) {
         <div className={styles.fact}>
           <dt className={styles.factLabel}>Where I stayed</dt>
           <dd className={styles.factValue}>
-            <a
-              href={trip.hotelUrl}
-              className={styles.hotelLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {trip.hotelName}
-              <span aria-hidden="true"> ↗</span>
-            </a>
+            {trip.accommodation && trip.accommodation.length > 0 ? (
+              trip.accommodation.map((hotel, index) => (
+                <a
+                  key={index}
+                  href={hotel.url}
+                  className={styles.hotelLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'block' }} // Zajišťuje, že se více hotelů složí pod sebe. Můžeš smazat, pokud to řeší přímo `.hotelLink` v CSS.
+                >
+                  {hotel.name}
+                  <span aria-hidden="true"> ↗</span>
+                </a>
+              ))
+            ) : (
+              <span>No accommodation listed</span>
+            )}
           </dd>
         </div>
       </dl>
