@@ -4,14 +4,18 @@ cloudinary.config({
   secure: true,
 })
 
+// Veřejné rozhraní pro komponenty aplikující CldImage
 export interface CloudinaryPhoto {
-  src: string
+  publicId: string
+  src: string 
   alt: string
   createdAt: string
   width: number
   height: number
+  caption?: string
 }
 
+// Pomocná funkce pro generování fallback URL adres
 function getOptimizedImageUrl(
   publicId: string,
   options: { width?: number; height?: number; crop?: string; quality?: string } = {},
@@ -34,49 +38,67 @@ function getOptimizedImageUrl(
   })
 }
 
-// 1. PŮVODNÍ FUNKCE: Načte VŠECHNY fotky pro detail výletu (seřazené podle EXIFu)
+// 1. UPRAVENÁ FUNKCE: Načte fotky a seřadí je abecedně/numericky podle display_name (např. IMG_0645)
 export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryPhoto[]> {
   try {
     const result = await cloudinary.api.resources({
       type: 'upload',
       prefix: folderId,
       max_results: 100,
-      exif: true,
     })
 
-    const photos: CloudinaryPhoto[] = result.resources.map((resource: any) => ({
-      // ZMĚNA: Pouze omezíme max šířku na 1000px, výšku a ořez fill vymažeme, aby zůstal zachován poměr stran
-      src: getOptimizedImageUrl(resource.public_id, { width: 1000 }), 
-      alt: `Fotka z výletu ${folderId}`,
-      createdAt: resource.exif?.DateTimeOriginal || resource.created_at,
-      width: resource.width || 1200,
-      height: resource.height || 800,
-    }))
+    console.log(result);
 
-    return photos.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+    const photos: CloudinaryPhoto[] = result.resources.map((resource: any) => {
+      return {
+        publicId: resource.public_id,
+        src: getOptimizedImageUrl(resource.public_id, { width: 1000 }),
+        alt: `Fotka z výletu ${folderId}`,
+        createdAt: resource.created_at,
+        width: resource.width || 1200,
+        height: resource.height || 800,
+        caption: resource.context?.custom?.caption,
+        // Dočasně si uložíme display_name, abychom podle něj mohli seřadit, ale nerozbili rozhraní
+        _displayName: resource.display_name || '' 
+      }
+    })
+
+    // Řadíme numericky vzestupně podle původního názvu souboru (IMG_0645 atd.)
+    photos.sort((a: any, b: any) => 
+      a._displayName.localeCompare(b._displayName, undefined, { numeric: true, sensitivity: 'base' })
+    )
+
+    // Odstraníme pomocnou vlastnost _displayName před vrácením
+    return photos.map(({ _displayName, ...cleanPhoto }: any) => cleanPhoto)
   } catch (error) {
     console.error(`Chyba při načítání fotek ze složky ${folderId}:`, error)
     return []
   }
 }
 
-// 2. NOVÁ FUNKCE: Načte pouze 4 vybrané fotky pro koláž na homepage pomocí TAGU
+// 2. FUNKCE PRO HOMEPAGE: Stejná úprava pro řazení podle display_name u vybraných fotek
 export async function getFeaturedPhotosForTrip(folderId: string): Promise<CloudinaryPhoto[]> {
   try {
-    // Použijeme Cloudinary Search API, které je pro vyhledávání podle kombinace složky a tagu nejvhodnější
     const result = await cloudinary.search
       .expression(`folder:${folderId} AND tags:featured`)
       .max_results(4)
       .execute()
 
-    return result.resources.map((resource: any) => ({
+    const photos = result.resources.map((resource: any) => ({
+      publicId: resource.public_id,
       src: getOptimizedImageUrl(resource.public_id, { width: 540, height: 360, crop: 'fill' }),
       alt: `Náhledová fotka z výletu ${folderId}`,
-      // Search API vrací datum nahrání/vytvoření v poli created_at, pro náhled na homepage nám to bohatě stačí
       createdAt: resource.created_at,
       width: resource.width || 1200,
       height: resource.height || 800,
+      _displayName: resource.display_name || ''
     }))
+
+    photos.sort((a: any, b: any) => 
+      a._displayName.localeCompare(b._displayName, undefined, { numeric: true, sensitivity: 'base' })
+    )
+
+    return photos.map(({ _displayName, ...cleanPhoto }: any) => cleanPhoto)
   } catch (error) {
     console.error(`Chyba při načítání featured fotek pro ${folderId}:`, error)
     return []

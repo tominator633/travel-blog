@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
+import { CldImage } from 'next-cloudinary'
 import type { CloudinaryPhoto } from '@/src/lib/cloudinary'
 import styles from './PhotoGallery.module.css'
 
@@ -39,46 +39,36 @@ export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) 
 
   const active = openIndex !== null ? photos[openIndex] : null
 
-  const getLightboxSrc = (src: string) =>
-    src
-      .replace(/c_fill/g, 'c_fit')
-      .replace(/w_\d+/g, 'w_1600')
-      .replace(/h_\d+/g, 'h_1200')
-      .replace(/q_auto/g, 'q_auto:good')
-
   return (
     <>
       <ul className={styles.grid}>
-  {photos.map((photo, i) => (
-    <li key={photo.src} className={styles.item}>
-      <button
-        type="button"
-        className={styles.trigger}
-        onClick={() => setOpenIndex(i)}
-        aria-label={`Open photo: ${photo.alt}`}
-      >
-        <Image
-          src={photo.src}
-          alt={photo.alt}
-          // ZMĚNA: Místo fill předáme reálné rozměry. Next.js podle nich vypočítá 
-          // správný poměr stran a CSS zařídí, aby se fotka přizpůsobila šířce sloupce.
-          width={photo.width}
-          height={photo.height}
-          sizes="(max-width: 760px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className={styles.img}
-          loading="lazy"
-          decoding="async"
-        />
-        {photo.caption && (
-          <span className={styles.caption}>{photo.caption}</span>
-        )}
-        <span className={styles.expand} aria-hidden="true">
-          View
-        </span>
-      </button>
-    </li>
-  ))}
-</ul>
+        {photos.map((photo, i) => (
+          <li key={photo.publicId} className={styles.item}>
+            <button
+              type="button"
+              className={styles.trigger}
+              onClick={() => setOpenIndex(i)}
+              aria-label={`Open photo: ${photo.alt}`}
+            >
+              <CldImage
+                src={photo.publicId} // CldImage bere přímo public_id
+                alt={photo.alt}
+                width={1000}        // Maximální šířka pro grid náhled
+                height={Math.round((1000 / photo.width) * photo.height)} // Zachování poměru stran
+                sizes="(max-width: 760px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={styles.img}
+                loading="lazy"
+              />
+              {photo.caption && (
+                <span className={styles.caption}>{photo.caption}</span>
+              )}
+              <span className={styles.expand} aria-hidden="true">
+                View
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
 
       {isOpen && active && (
         <div
@@ -116,15 +106,16 @@ export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) 
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.stageImgWrap}>
-              <Image
-                src={getLightboxSrc(active.src)}
+              <CldImage
+                src={active.publicId}
                 alt={active.alt}
                 fill
                 sizes="90vw"
                 className={styles.stageImg}
                 priority
-                loading="eager"
-                decoding="async"
+                // Zde definujeme kvalitnější transformaci pro Lightbox naprosto čistě:
+                quality="85" 
+                crop="fit"
               />
             </div>
             <figcaption className={styles.stageCaption}>
