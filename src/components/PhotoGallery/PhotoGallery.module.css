@@ -1,18 +1,28 @@
+/* Kontejner mřížky postavený na flexboxu */
 .grid {
-  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
   padding: 0;
   margin: 0;
-  
-  /* ZMĚNA: Přechod z columns na CSS Grid s nativním masonry */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: masonry;
-  grid-gap: 20px;
+  list-style: none;
+}
+
+/* Flexbox sloupce zaručující masonry chování bez děr */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .item {
-  /* ZMĚNA: U Grid Masonry už break-inside nepotřebujeme, 
-     Grid sám hlídá, aby se prvek neroztrhl */
   width: 100%;
 }
 
@@ -214,39 +224,62 @@
 .prev { left: 24px; }
 .next { right: 24px; }
 
-/* Responzivita */
+/* Třídy pro řízení responzivity mřížek */
+.desktopGrid { display: flex; }
+.tabletGrid  { display: none; }
+.mobileGrid   { display: none; }
+
 @media (max-width: 920px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .desktopGrid { display: none; }
+  .tabletGrid  { display: flex; }
+  .mobileGrid   { display: none; }
 }
 
 @media (max-width: 620px) {
-  .grid {
-    grid-template-columns: 1fr;
-    grid-gap: 12px;
+  .desktopGrid { display: none; }
+  .tabletGrid  { display: none; }
+  
+  /* Mobilní grid řadí věci vertikálně jako jeden stream */
+  .mobileGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* O něco větší mezera mezi kartami s popisky */
+  }
+
+  .grid.mobileGrid {
     margin-left: -24px;
     margin-right: -24px;
     width: calc(100% + 48px);
   }
 
-  .trigger {
-    border-radius: 0px;
+  .mobileItem {
+    width: 100%;
   }
 
-  .prev,
-  .next {
-    width: 48px;
-    height: 48px;
-    font-size: 1.8rem;
-    background: rgba(0, 0, 0, 0.6);
+  /* Karta pro mobilní fotku a její tmavé zázemí */
+  .mobileCard {
+    display: flex;
+    flex-direction: column;
+    background: #000000; /* Zde definované čistě černé pole */
+    width: 100%;
+    overflow: hidden;
   }
-  .prev { left: 12px; }
-  .next { right: 12px; }
-  .close { top: 12px; right: 12px; }
-  
-  .stageCaption {
-    padding: 16px;
-    font-size: 0.85rem;
+
+  .mobileImg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Styl pro černé pole s popiskem pod fotkou */
+  .mobileCaption {
+    padding: 14px 20px 18px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    background: #000000;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Velmi jemná linka pro oddělení od spodku fotky */
   }
 }

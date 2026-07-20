@@ -45,6 +45,7 @@ export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryP
       type: 'upload',
       prefix: folderId,
       max_results: 100,
+      context: true,
     })
 
     console.log(result);

@@ -72,11 +72,11 @@ export const trips: Trip[] = [
       'A brilliant autumn journey through Scandinavia that kicked off with absolute stadium chaos. We landed in Stockholm and went straight into the pure energy of Lady Gaga’s Mayhem Ball at the Avicii Arena. From that unforgettable high, the trip transitioned into a scenic path south—crossing the water from the modern, quiet corners of Malmö to the vibrant, bicycle-filled design hubs of Copenhagen. A perfect mix of pop spectacle, crisp October air, and effortless Nordic charm.',
     accommodation: [
       {
-        name: "Avanti Apartment Hotel", 
+        name: "Avanti Apartment Hotel - STOCKHOLM", 
         url: "https://www.tripadvisor.com/Hotel_Review-g189852-d23763547-Reviews-Avanti_Apartment_Hotel-Stockholm.html"
       },
       {
-        name: "CABINN City Hotel", 
+        name: "CABINN City Hotel - COPENHAGEN", 
         url: "https://www.tripadvisor.com/Hotel_Review-g189541-d338239-Reviews-CABINN_City_Hotel-Copenhagen_Zealand.html"
       },
     ],
@@ -95,11 +95,11 @@ export const trips: Trip[] = [
       'An incredible journey through the vibrant heart of Italy. We started with the historic porticoes and rich food culture of Bologna and the Renaissance magic of Florence, before heading to the Adriatic coast for six deeply relaxing days in Rimini. Using the coast as our hub, we scaled the towering cliffside fortresses of San Marino and wrapped up the trip with two high-octane, adrenaline-fueled days conquering the massive roller coasters at Mirabilandia. Sun, history, and pure theme park speed.',
     accommodation: [
       {
-        name: "Astoria Prestige Apartments", 
+        name: "Astoria Prestige Apartments - BOLOGNA", 
         url: "https://www.tripadvisor.ie/Hotel_Review-g187801-d34310223-Reviews-Astoria_Prestige_Apartments-Bologna_Province_of_Bologna_Emilia_Romagna.html"
       },
       {
-        name: "Residence Ten Suite", 
+        name: "Residence Ten Suite - RIMINI", 
         url: "https://www.tripadvisor.com/Hotel_Review-g187807-d10272014-Reviews-Residence_Ten_Suite-Rimini_Province_of_Rimini_Emilia_Romagna.html"
       },
     ],
