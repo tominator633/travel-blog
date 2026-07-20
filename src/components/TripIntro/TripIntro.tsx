@@ -5,9 +5,7 @@ import styles from './TripIntro.module.css'
 export default function TripIntro({ trip }: { trip: Trip }) {
   return (
     <section className={styles.intro} aria-labelledby="trip-heading">
-      <Link href="/" className={styles.back}>
-        <span aria-hidden="true">&larr;</span> All trips
-      </Link>
+  
 
       <p className={styles.eyebrow}>
         {trip.location} &middot; {trip.dates}

@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative; /* ZMĚNA: Záchytný bod pro absolutní pozici šipky zpět */
 }
 
 .brand {
@@ -41,7 +42,7 @@
 }
 
 .nameSpan {
-color: var(--white);
+  color: var(--white);
 }
 
 .nav {
@@ -63,18 +64,51 @@ color: var(--white);
   color: var(--paper);
 }
 
+/* --- NOVÉ STYLY PRO TLAČÍTKO ZPĚT --- */
+.backButton {
+  position: absolute;
+  left: 24px; /* Srovnáno přesně s paddingem vnitřního kontejneru */
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(244, 239, 230, 0.7);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.18s ease;
+  height: 100%;
+  z-index: 3000;
+}
+
+.backButton:hover {
+  color: var(--paper);
+}
+
+.arrow {
+  font-size: 1.1rem;
+  line-height: 0;
+}
 
 @media (max-width: 620px) {
   .name {
-  font-size: 1rem;
+    font-size: 1rem;
+  }
 
-}
+  .inner {
+    height: 40px;
+    padding: 0 16px; /* Mírně zmenšený padding na hranách mobilu */
+  }
 
-.inner {
+  /* Mobilní úprava pro back button */
+  .backButton {
+    left: 16px;
+  }
 
-  height: 40px;
-
-
-}
-
+  .backText {
+    display: none; /* Na mobilech schováme text, aby nevrážel do loga, zůstane jen čistá šipka */
+  }
 }

@@ -23,7 +23,7 @@ export type Trip = {
 export const trips: Trip[] = [
   {
     id: 'singapore-2023',
-    title: 'Singapore 2023',
+    title: 'Singapore',
     location: 'Singapore',
     year: 2023,
     dates: 'June 2023',
@@ -42,7 +42,7 @@ export const trips: Trip[] = [
   },
   {
     id: 'cambodia-2023',
-    title: 'Siem Reap, Cambodia 2023',
+    title: 'Siem Reap',
     location: 'Cambodia',
     year: 2023,
     dates: 'June 2023',
@@ -61,7 +61,7 @@ export const trips: Trip[] = [
   },
   {
     id: 'sweden-2025',
-    title: 'Stockholm - Malmö - Copenhagen, Scandinavia 2025',
+    title: 'Stockholm - Malmö - Copenhagen',
     location: 'Sweden, Denmark',
     year: 2025,
     dates: 'October 2025',
@@ -84,7 +84,7 @@ export const trips: Trip[] = [
   },
   {
     id: 'italy-2026',
-    title: 'Emilia Romagna - Firenze, Italy 2026',
+    title: 'Emilia Romagna - Firenze',
     location: 'Italy',
     year: 2026,
     dates: 'June 2026',
