@@ -23,6 +23,7 @@ export default function TripCard({ trip, lang, dict }: TripCardProps) {
 
   const location = trip.location[lang] || trip.location.en
   const summary = trip.summary[lang] || trip.summary.en
+  const title = trip.title[lang] || trip.title.en
 
   // Pomocná funkce pro správné skloňování slov podle poctu dní a slovníku
   const getDaysLabel = (count: number) => {
@@ -59,7 +60,7 @@ export default function TripCard({ trip, lang, dict }: TripCardProps) {
 
       <div className={styles.body}>
         <span className={styles.year}>{trip.year}</span>
-        <h3 className={styles.title}>{trip.title}</h3>
+        <h3 className={styles.title}>{title}</h3>
         <p className={styles.location}>{location}</p>
         <p className={styles.summary}>{summary}</p>
         <span className={styles.cta}>

@@ -23,6 +23,7 @@ export default function TripIntro({ trip, lang, dict, cardDict }: TripIntroProps
   const location = trip.location[lang] || trip.location.en
   const dates = trip.dates[lang] || trip.dates.en
   const intro = trip.intro[lang] || trip.intro.en
+  const title = trip.title[lang] || trip.title.en
 
   // Pomocné skloňování dní
   const getDaysLabel = (count: number) => {
@@ -39,7 +40,7 @@ export default function TripIntro({ trip, lang, dict, cardDict }: TripIntroProps
       </p>
 
       <h1 id="trip-heading" className={styles.heading}>
-        {trip.title}
+        {title}
       </h1>
 
       <p className={styles.body}>{intro}</p>
