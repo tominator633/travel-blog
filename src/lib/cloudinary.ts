@@ -8,11 +8,12 @@ cloudinary.config({
 export interface CloudinaryPhoto {
   publicId: string
   src: string 
-  alt: string
+  alt: string // Ponecháno jako základní fallback
   createdAt: string
   width: number
   height: number
-  caption?: string
+  captionCz?: string 
+  captionEn?: string
 }
 
 // Pomocná funkce pro generování fallback URL adres
@@ -38,28 +39,26 @@ function getOptimizedImageUrl(
   })
 }
 
-// 1. UPRAVENÁ FUNKCE: Načte fotky a seřadí je abecedně/numericky podle display_name (např. IMG_0645)
+// 1. UPRAVENÁ FUNKCE: Načte fotky a seřadí je abecedně/numericky podle display_name
 export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryPhoto[]> {
   try {
     const result = await cloudinary.api.resources({
       type: 'upload',
       prefix: folderId,
       max_results: 100,
-      context: true,
+      context: true, // Povolí načtení kontextových metadat
     })
-
-    console.log(result);
 
     const photos: CloudinaryPhoto[] = result.resources.map((resource: any) => {
       return {
         publicId: resource.public_id,
         src: getOptimizedImageUrl(resource.public_id, { width: 1000 }),
-        alt: `Fotka z výletu ${folderId}`,
+        alt: `Photo from trip ${folderId.split('/').pop()}`, // Základní fallback
         createdAt: resource.created_at,
         width: resource.width || 1200,
         height: resource.height || 800,
-        caption: resource.context?.custom?.caption,
-        // Dočasně si uložíme display_name, abychom podle něj mohli seřadit, ale nerozbili rozhraní
+        captionCz: resource.context?.custom?.caption_cz || '',
+        captionEn: resource.context?.custom?.caption_en || '',
         _displayName: resource.display_name || '' 
       }
     })
@@ -69,7 +68,6 @@ export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryP
       a._displayName.localeCompare(b._displayName, undefined, { numeric: true, sensitivity: 'base' })
     )
 
-    // Odstraníme pomocnou vlastnost _displayName před vrácením
     return photos.map(({ _displayName, ...cleanPhoto }: any) => cleanPhoto)
   } catch (error) {
     console.error(`Chyba při načítání fotek ze složky ${folderId}:`, error)
@@ -77,21 +75,24 @@ export async function getPhotosFromFolder(folderId: string): Promise<CloudinaryP
   }
 }
 
-// 2. FUNKCE PRO HOMEPAGE: Stejná úprava pro řazení podle display_name u vybraných fotek
+// 2. FUNKCE PRO HOMEPAGE: Přidáno stahování kontextu i pro Search API
 export async function getFeaturedPhotosForTrip(folderId: string): Promise<CloudinaryPhoto[]> {
   try {
     const result = await cloudinary.search
       .expression(`folder:${folderId} AND tags:featured`)
+      .with_field('context') // Zásadní změna: Donutí Search API vrátit metadata!
       .max_results(4)
       .execute()
 
     const photos = result.resources.map((resource: any) => ({
       publicId: resource.public_id,
       src: getOptimizedImageUrl(resource.public_id, { width: 540, height: 360, crop: 'fill' }),
-      alt: `Náhledová fotka z výletu ${folderId}`,
+      alt: `Featured photo from ${folderId.split('/').pop()}`,
       createdAt: resource.created_at,
       width: resource.width || 1200,
       height: resource.height || 800,
+      captionCz: resource.context?.custom?.caption_cz || '',
+      captionEn: resource.context?.custom?.caption_en || '',
       _displayName: resource.display_name || ''
     }))
 

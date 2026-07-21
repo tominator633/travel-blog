@@ -1,0 +1,33 @@
+{
+"intro": {
+    "eyebrow": "Zápisky z cest po světě",
+    "headingMain": "Jezdím na místa a dávám to",
+    "headingAccent": "sem.",
+    "lede": "Ahoj, jsem Tomáš. Zde si ukládám fotky a příběhy ze svých cest — východy slunce, kvůli kterým jsem vstával až příliš brzy, jídlo, kterého jsem snědl až příliš moc, a cesty, které nevedly tam, kam jsem čekal. Vyber si cestu níže a pojď se podívat.",
+    "stats": {
+      "trips": "Zaznamenané cesty",
+      "countries": "Navštívené země",
+      "cameras": "Ztracené fotoaparáty"
+    },
+    "profileAlt": "Tomáš v Angkor Wat",
+    "badge": "Někde"
+  },
+  "home": {
+    "tripsTitle": "Všechny cesty",
+    "tripsSub": "Každá cesta, od nejnovější po nejstarší."
+  },
+  
+  "tripCard": {
+    "day": "den",
+    "days2To4": "dny",
+    "days5Plus": "dní"
+  },
+
+
+  "tripIntro": {
+    "duration": "Délka",
+    "when": "Kdy",
+    "whereIStayed": "Kde jsem bydlel",
+    "noAccommodation": "Žádné ubytování"
+  }
+}

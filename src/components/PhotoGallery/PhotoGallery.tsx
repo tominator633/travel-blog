@@ -1,11 +1,18 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { CldImage } from 'next-cloudinary'
 import type { CloudinaryPhoto } from '@/src/lib/cloudinary'
+import PhotoThumbnail from './PhotoThumbnail/PhotoThumbnail'
+import PhotoMobileCard from './PhotoMobileCard/PhotoMobileCard'
+import PhotoLightbox from './PhotoLightbox/PhotoLightbox'
 import styles from './PhotoGallery.module.css'
 
-export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) {
+interface PhotoGalleryProps {
+  photos: CloudinaryPhoto[]
+  lang: 'cz' | 'en'
+}
+
+export default function PhotoGallery({ photos, lang }: PhotoGalleryProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const isOpen = openIndex !== null
 
@@ -15,10 +22,7 @@ export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) 
     [photos.length],
   )
   const prev = useCallback(
-    () =>
-      setOpenIndex((i) =>
-        i === null ? i : (i - 1 + photos.length) % photos.length,
-      ),
+    () => setOpenIndex((i) => (i === null ? i : (i - 1 + photos.length) % photos.length)),
     [photos.length],
   )
 
@@ -37,186 +41,73 @@ export default function PhotoGallery({ photos }: { photos: CloudinaryPhoto[] }) 
     }
   }, [isOpen, close, next, prev])
 
-  // Rozdělení fotek do 3 sloupců pro velké obrazovky (Zleva doprava)
-  const columns3: Array<Array<CloudinaryPhoto & { originalIndex: number }>> = [[], [], []]
-  photos.forEach((photo, i) => {
-    columns3[i % 3].push({ ...photo, originalIndex: i })
-  })
+  // Logika rozdělení do sloupců zůstává zde
+  const columns3 = [[], [], []] as Array<Array<CloudinaryPhoto & { originalIndex: number }>>
+  photos.forEach((photo, i) => columns3[i % 3].push({ ...photo, originalIndex: i }))
 
-  // Rozdělení fotek do 2 sloupců pro tablety
-  const columns2: Array<Array<CloudinaryPhoto & { originalIndex: number }>> = [[], []]
-  photos.forEach((photo, i) => {
-    columns2[i % 2].push({ ...photo, originalIndex: i })
-  })
+  const columns2 = [[], []] as Array<Array<CloudinaryPhoto & { originalIndex: number }>>
+  photos.forEach((photo, i) => columns2[i % 2].push({ ...photo, originalIndex: i }))
 
-  const active = openIndex !== null ? photos[openIndex] : null
+  const activePhoto = openIndex !== null ? photos[openIndex] : null
 
   return (
     <>
-      {/* Mřížka pro desktop (3 sloupce) */}
+      {/* Desktop Grid */}
       <div className={`${styles.grid} ${styles.desktopGrid}`}>
         {columns3.map((column, colIdx) => (
           <ul key={`col-3-${colIdx}`} className={styles.column}>
             {column.map((photo) => (
               <li key={photo.publicId} className={styles.item}>
-                <button
-                  type="button"
-                  className={styles.trigger}
+                <PhotoThumbnail
+                  photo={photo}
+                  lang={lang}
                   onClick={() => setOpenIndex(photo.originalIndex)}
-                  aria-label={`Open photo: ${photo.alt}`}
-                >
-                  <CldImage
-                    src={photo.publicId}
-                    alt={photo.alt}
-                    width={1000}
-                    height={Math.round((1000 / photo.width) * photo.height)}
-                    sizes="(max-width: 1200px) 33vw"
-                    className={styles.img}
-                    loading="lazy"
-                  />
-                  {photo.caption && (
-                    <span className={styles.caption}>{photo.caption}</span>
-                  )}
-                  <span className={styles.expand} aria-hidden="true">
-                    View
-                  </span>
-                </button>
+                  sizes="(max-width: 1200px) 33vw"
+                />
               </li>
             ))}
           </ul>
         ))}
       </div>
 
-      {/* Mřížka pro tablety (2 sloupce) */}
+      {/* Tablet Grid */}
       <div className={`${styles.grid} ${styles.tabletGrid}`}>
         {columns2.map((column, colIdx) => (
           <ul key={`col-2-${colIdx}`} className={styles.column}>
             {column.map((photo) => (
               <li key={photo.publicId} className={styles.item}>
-                <button
-                  type="button"
-                  className={styles.trigger}
+                <PhotoThumbnail
+                  photo={photo}
+                  lang={lang}
                   onClick={() => setOpenIndex(photo.originalIndex)}
-                  aria-label={`Open photo: ${photo.alt}`}
-                >
-                  <CldImage
-                    src={photo.publicId}
-                    alt={photo.alt}
-                    width={1000}
-                    height={Math.round((1000 / photo.width) * photo.height)}
-                    sizes="(max-width: 920px) 50vw"
-                    className={styles.img}
-                    loading="lazy"
-                  />
-                  {photo.caption && (
-                    <span className={styles.caption}>{photo.caption}</span>
-                  )}
-                  <span className={styles.expand} aria-hidden="true">
-                    View
-                  </span>
-                </button>
+                  sizes="(max-width: 920px) 50vw"
+                />
               </li>
             ))}
           </ul>
         ))}
       </div>
 
-      {/* Mřížka pro mobily (1 sloupec - Lightbox VYPNUT, bez buttonu, captions přímo pod fotkou) */}
+      {/* Mobile Grid */}
       <ul className={`${styles.grid} ${styles.mobileGrid}`}>
         {photos.map((photo) => (
           <li key={photo.publicId} className={styles.mobileItem}>
-            <div className={styles.mobileCard}>
-              <CldImage
-                src={photo.publicId}
-                alt={photo.alt}
-                width={1080} // Vyšší šířka pro ideální ostrost na mobilních Retina displejích
-                height={Math.round((1080 / photo.width) * photo.height)}
-                sizes="100vw"
-                className={styles.mobileImg}
-                priority={false}
-                loading="lazy"
-                quality="85" // Vyšší kvalita přímo v gridu na mobilu
-              />
-              {photo.caption && (
-                <div className={styles.mobileCaption}>
-                  {photo.caption}
-                </div>
-              )}
-            </div>
+            <PhotoMobileCard photo={photo} lang={lang} />
           </li>
         ))}
       </ul>
 
-      {/* Lightbox Modál (Zůstává funkční pro desktop/tablet) */}
-      {isOpen && active && (
-        <div
-          className={styles.lightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label={active.alt}
-          onClick={close}
-        >
-          <button
-            type="button"
-            className={`${styles.close} ${styles.control}`}
-            onClick={close}
-            aria-label="Close"
-          >
-            &times;
-          </button>
-
-          {photos.length > 1 && (
-            <button
-              type="button"
-              className={`${styles.prev} ${styles.control}`}
-              onClick={(e) => {
-                e.stopPropagation()
-                prev()
-              }}
-              aria-label="Previous photo"
-            >
-              &#8249;
-            </button>
-          )}
-
-          <figure
-            className={styles.stage}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className={styles.stageImgWrap}>
-              <CldImage
-                src={active.publicId}
-                alt={active.alt}
-                fill
-                sizes="90vw"
-                className={styles.stageImg}
-                priority
-                quality="85" 
-                crop="fit"
-              />
-            </div>
-            <figcaption className={styles.stageCaption}>
-              <span>{active.caption ?? active.alt}</span>
-              <span className={styles.counter}>
-                {openIndex! + 1} / {photos.length}
-              </span>
-            </figcaption>
-          </figure>
-
-          {photos.length > 1 && (
-            <button
-              type="button"
-              className={`${styles.next} ${styles.control}`}
-              onClick={(e) => {
-                e.stopPropagation()
-                next()
-              }}
-              aria-label="Next photo"
-            >
-              &#8250;
-            </button>
-          )}
-        </div>
+      {/* Lightbox - Modální okno */}
+      {isOpen && activePhoto && (
+        <PhotoLightbox
+          photo={activePhoto}
+          photoIndex={openIndex!}
+          totalPhotos={photos.length}
+          lang={lang}
+          onClose={close}
+          onNext={next}
+          onPrev={prev}
+        />
       )}
     </>
   )

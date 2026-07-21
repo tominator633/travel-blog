@@ -2,36 +2,61 @@ import Image from 'next/image'
 import { trips } from '@/src/data/trips'
 import styles from './Intro.module.css'
 
-export default function Intro() {
+interface IntroProps {
+  dict: {
+    eyebrow: string
+    headingMain: string
+    headingAccent: string
+    lede: string
+    stats: {
+      trips: string
+      countries: string
+      cameras: string
+    }
+    profileAlt: string
+    badge: string
+  }
+  lang: 'cz' | 'en'
+}
+
+export default function Intro({ dict, lang }: IntroProps) {
   const tripCount = trips.length
-  const countryCount = new Set(trips.map((t) => t.location.split(',').pop()?.trim())).size
+
+  // Získání počtu unikátních zemí
+  const countryCount = new Set(
+    trips
+      .flatMap((t) => {
+        const loc = t.location[lang] || t.location.en || ''
+        return loc.split(',')
+      })
+      .map((country) => country.trim())
+      .filter(Boolean)
+  ).size
 
   return (
     <section className={styles.intro} id="about" aria-labelledby="intro-heading">
       <div className={styles.text}>
-        <p className={styles.eyebrow}>Field notes from the world</p>
+        <p className={styles.eyebrow}>{dict.eyebrow}</p>
+
         <h1 id="intro-heading" className={styles.heading}>
-          I go places
+          {dict.headingMain}
           <br />
-          and put it <span className={styles.accent}>here.</span>
+          <span className={styles.accent}>{dict.headingAccent}</span>
         </h1>
-        <p className={styles.lede}>
-          Hi, I&apos;m Tomas. This is where I keep the photos and stories from my
-          trips &mdash; the sunrises I woke up too early for, the food I ate too
-          much of, and the roads that didn&apos;t go where I expected. Pick a
-          trip below and come along.
-        </p>
+
+        <p className={styles.lede}>{dict.lede}</p>
+
         <dl className={styles.stats}>
           <div className={styles.stat}>
-            <dt className={styles.statLabel}>Trips logged</dt>
+            <dt className={styles.statLabel}>{dict.stats.trips}</dt>
             <dd className={styles.statValue}>{tripCount}</dd>
           </div>
           <div className={styles.stat}>
-            <dt className={styles.statLabel}>Countries</dt>
+            <dt className={styles.statLabel}>{dict.stats.countries}</dt>
             <dd className={styles.statValue}>{countryCount}</dd>
           </div>
           <div className={styles.stat}>
-            <dt className={styles.statLabel}>Cameras lost</dt>
+            <dt className={styles.statLabel}>{dict.stats.cameras}</dt>
             <dd className={styles.statValue}>1</dd>
           </div>
         </dl>
@@ -41,14 +66,14 @@ export default function Intro() {
         <div className={styles.frame}>
           <Image
             src="/images/profile.jpeg"
-            alt="Tomas at Angkor Wat"
+            alt={dict.profileAlt}
             fill
             sizes="(max-width: 900px) 80vw, 420px"
             className={styles.photo}
             priority
           />
         </div>
-        <span className={styles.badge}>Somewhere</span>
+        <span className={styles.badge}>{dict.badge}</span>
       </div>
     </section>
   )

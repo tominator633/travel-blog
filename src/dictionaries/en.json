@@ -1,0 +1,37 @@
+{
+"intro": {
+    "eyebrow": "Field notes from the world",
+    "headingMain": "I go places and put it",
+    "headingAccent": "here.",
+    "lede": "Hi, I'm Tomas. This is where I keep the photos and stories from my trips — the sunrises I woke up too early for, the food I ate too much of, and the roads that didn't go where I expected. Pick a trip below and come along.",
+    "stats": {
+      "trips": "Trips logged",
+      "countries": "Countries",
+      "cameras": "Cameras lost"
+    },
+    "profileAlt": "Tomas at Angkor Wat",
+    "badge": "Somewhere"
+  },
+
+
+  "home": {
+    "tripsTitle": "The Trips",
+    "tripsSub": "Every journey, most recent first. Tap in."
+  },
+
+
+
+  "tripCard": {
+    "day": "days",
+    "days2To4": "days",
+    "days5Plus": "days"
+  },
+
+
+  "tripIntro": {
+    "duration": "Duration",
+    "when": "When",
+    "whereIStayed": "Where I stayed",
+    "noAccommodation": "No accommodation listed"
+  }
+}

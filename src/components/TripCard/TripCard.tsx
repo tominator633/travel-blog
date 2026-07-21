@@ -6,22 +6,38 @@ import type { Trip } from '@/src/data/trips'
 import type { CloudinaryPhoto } from '@/src/lib/cloudinary'
 import styles from './TripCard.module.css'
 
-// Rozšíříme typ Trip o pole fotek z Cloudinary, které mu doplňujeme na homepage
 interface TripCardProps {
   trip: Trip & {
     photos: CloudinaryPhoto[]
   }
+  lang: 'cz' | 'en'
+  dict: {
+    day: string
+    days2To4: string
+    days5Plus: string
+  }
 }
 
-export default function TripCard({ trip }: TripCardProps) {
-  // Cloudinary Search API nám už vrátilo přesně 4 fotky, pojistíme se pomocí slice
+export default function TripCard({ trip, lang, dict }: TripCardProps) {
   const collage = trip.photos ? trip.photos.slice(0, 4) : []
+
+  const location = trip.location[lang] || trip.location.en
+  const summary = trip.summary[lang] || trip.summary.en
+
+  // Pomocná funkce pro správné skloňování slov podle poctu dní a slovníku
+  const getDaysLabel = (count: number) => {
+    if (count === 1) return dict.day
+    if (count >= 2 && count <= 4) return dict.days2To4
+    return dict.days5Plus
+  }
+
+  const daysText = `${trip.days} ${getDaysLabel(trip.days)}`
 
   return (
     <Link
-      href={`/trips/${trip.id}`}
+      href={`/${lang}/trips/${trip.id}`}
       className={styles.card}
-      aria-label={`${trip.title} — ${trip.days} days in ${trip.location}`}
+      aria-label={`${trip.title} — ${daysText} (${location})`}
     >
       <div className={styles.collage} aria-hidden="true">
         {collage.map((photo, i) => (
@@ -44,10 +60,10 @@ export default function TripCard({ trip }: TripCardProps) {
       <div className={styles.body}>
         <span className={styles.year}>{trip.year}</span>
         <h3 className={styles.title}>{trip.title}</h3>
-        <p className={styles.location}>{trip.location}</p>
-        <p className={styles.summary}>{trip.summary}</p>
+        <p className={styles.location}>{location}</p>
+        <p className={styles.summary}>{summary}</p>
         <span className={styles.cta}>
-          {trip.days} days
+          {daysText}
           <span className={styles.arrow} aria-hidden="true">
             &rarr;
           </span>

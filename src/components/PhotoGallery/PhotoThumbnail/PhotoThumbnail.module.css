@@ -1,0 +1,125 @@
+/* Základní kontejner karty */
+.trigger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
+/* VÝCHOZÍ STYL PRO DOTYKOVÁ ZAŘÍZENÍ (Tablet / Mobil / zařízení bez hoveru) */
+/* Popisek je vždy viditelný dole pod fotkou, žádný přesahující overlay */
+.caption {
+  padding: 10px 4px 4px 4px;
+  line-height: 1.4;
+  color: var(--paper);
+  font-size: 0.88rem;
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* Tlačítko/odznak expand je na dotykových zařízeních skryté (nepotřebujeme ho) */
+.expand {
+  display: none;
+}
+
+/* ==========================================================================
+   STYL POUZE PRO ZAŘÍZENÍ S MYŠÍ A PODPOROU HOVERU (Desktop, notebooky)
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  .trigger {
+    background: var(--paper-2);
+    line-height: 0;
+  }
+
+  .img {
+    border-radius: 0;
+    transition: transform 0.5s ease;
+  }
+
+  .trigger:hover .img {
+    transform: scale(1.04);
+  }
+
+  /* Ztmavovací gradient přes fotku */
+  .trigger::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(22, 19, 15, 0) 55%,
+      rgba(22, 19, 15, 0.55) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.28s ease;
+  }
+
+  /* Popisek umístěný absolutně přes fotku vlevo dole */
+  .caption {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    right: 16px;
+    z-index: 2;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  /* Odznak "Zobrazit" vpravo nahoře */
+  .expand {
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    background: var(--accent);
+    color: var(--paper);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  /* Hover & Focus stavy pro myš */
+  .trigger:hover::after,
+  .trigger:focus-visible::after {
+    opacity: 1;
+  }
+
+  .trigger:hover .caption,
+  .trigger:focus-visible .caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .trigger:hover .expand,
+  .trigger:focus-visible .expand {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

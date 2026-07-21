@@ -1,0 +1,24 @@
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mobileImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mobileCaption {
+  padding: 14px 20px 18px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
