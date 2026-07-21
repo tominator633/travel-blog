@@ -48,22 +48,14 @@ export default function Header() {
           </p>
         </Link>
 
-        {/* Přepínač jazyka (zarovnaný doprava) */}
-        <div className={styles.langToggle}>
-          <Link
-            href={redirectedPathname()}
-            className={`${styles.langOption} ${currentLang === 'cz' ? styles.active : ''}`}
-          >
-            CZ
-          </Link>
-          <span className={styles.langDivider}>/</span>
-          <Link
-            href={redirectedPathname()}
-            className={`${styles.langOption} ${currentLang === 'en' ? styles.active : ''}`}
-          >
-            EN
-          </Link>
-        </div>
+        {/* Jednoduché tlačítko pro přepnutí jazyka */}
+        <Link
+          href={redirectedPathname()}
+          className={styles.langToggle}
+          aria-label={currentLang === 'cz' ? 'Switch to English' : 'Přepnout do češtiny'}
+        >
+          {currentLang.toUpperCase()}
+        </Link>
       </div>
     </header>
   )
