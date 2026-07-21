@@ -187,6 +187,64 @@ export const trips: Trip[] = [
     },
   ],
 },
+{
+  id: '2025-netherlands',
+  cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-NETHERLANDS',
+  title: 'Holland',
+  location: {
+    cz: 'Nizozemsko',
+    en: 'Netherlands',
+  },
+  year: 2025,
+  dates: {
+    cz: 'Září 2025',
+    en: 'September 2025',
+  },
+  days: 5,
+  summary: {
+    cz: 'Pětidenní objevování Nizozemska z bleskového rozhraní Rotterdamu na výlety do Amsterdamu, Haagu, Leidenu a za větrnými mlýny v Kinderdijku a Zaanse Schans.',
+    en: 'A 5-day Dutch exploration based in Rotterdam, featuring day trips to Amsterdam, The Hague, Leiden, and the historic windmills of Kinderdijk and Zaanse Schans.',
+  },
+  intro: {
+    cz: 'Pět dní v Nizozemsku plných ikonických větrných mlýnů, historických kanálů a moderní architektury. Jako základnu jsme zvolili Airbnb v moderním Rotterdamu, odkud jsme podnikali výlety do kulturního Leidenu, živého Amsterdamu, skanzenu Zaanse Schans, větrného Kinderdijku i politického centra v Haagu.',
+    en: 'Five unforgettable days exploring the Netherlands. Based at an Airbnb in vibrant Rotterdam, we set off on day trips to historic Leiden, bustling Amsterdam, the iconic windmills of Zaanse Schans and Kinderdijk, and the royal city of The Hague.',
+  },
+  accommodation: [
+    {
+      name: "Airbnb - ROTTERDAM", 
+      url: "" // Sem můžete vložit odkaz na vaše Airbnb ubytování v Rotterdamu
+    },
+  ],
+},
+{
+  id: '2025-belgium',
+  cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-BELGIUM',
+  title: 'Belgium - Brussels, Bruges & Antwerp',
+  location: {
+    cz: 'Belgie',
+    en: 'Belgium',
+  },
+  year: 2025,
+  dates: {
+    cz: 'Srpen 2025',
+    en: 'August 2025',
+  },
+  days: 4,
+  summary: {
+    cz: 'Čtyřdenní putování Belgií od hlavního města a pohádkových Brug přes návštěvu v Turnhoutu až po historické Antverpy.',
+    en: 'A 4-day journey through Belgium, from the capital and fairytale Bruges to visiting family friends in Turnhout and exploring Antwerp.',
+  },
+  intro: {
+    cz: 'Skvělý čtyřdenní výlet po Belgii plný čokolády, architektury a milých setkání. Začali jsme v rušném Bruselu a vydali se na výlet do pohádkových Brug s jejich kanály. Poté jsme strávili dva dny v Turnhoutu u máminy kamarádky, odkud jsme si odskočili na výlet do ikonických Antverp.',
+    en: 'A wonderful 4-day trip around Belgium filled with chocolate, scenic architecture, and great company. We started in bustling Brussels and took a day trip to fairytale Bruges with its romantic canals. Then we spent two days in Turnhout visiting a family friend, taking a side trip to explore historic Antwerp.',
+  },
+  accommodation: [
+    {
+      name: "Wellness Apart Hotel - BRUSSELS", 
+      url: "https://www.tripadvisor.com/Hotel_Review-g950786-d1017851-Reviews-Wellness_Apart_Hotel-Schaerbeek_Brussels.html"
+    },
+  ],
+},
   {
   id: '2025-luxembourg',
   cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-LUXEMBOURG',
