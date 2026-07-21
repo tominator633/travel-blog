@@ -155,39 +155,38 @@ export const trips: Trip[] = [
     
   },
   {
-    id: '2025-srilanka',
-    cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-SRILANKA',
-    title: 'Sri Lanka',
-    location: {
-      cz: 'Sri Lanka',
-      en: 'Sri Lanka',
-    },
-    year: 2025,
-    dates: {
-      cz: 'Duben 2025',
-      en: 'April 2025',
-    },
-    days: 9,
-    summary: {
-      cz: 'Italská kombinace gastronomie, pohodových dnů u moře, výhledů z pevnosti San Marina a adrenalinu na horských dráhách.',
-      en: 'A perfect Italian mix of food culture, slow coastal days, mountaintop fortress views, and high-speed coaster adrenaline.',
-    },
-    intro: {
-      cz: 'Neskutečná cesta živým srdcem Itálie. Začali jsme historickými podloubími a skvělým jídlem v Boloni společně s renesanční magií Florencie, načež jsme zamířili na jadrandské pobřeží do Rimini. Odtud jsme vyrazili do skalní pevnosti v San Marinu a výlet zakončili na horských dráhách v Mirabilandii.',
-      en: 'An incredible journey through the vibrant heart of Italy. We started with the historic porticoes and rich food culture of Bologna and the Renaissance magic of Florence, before heading to the Adriatic coast for six deeply relaxing days in Rimini. Using the coast as our hub, we scaled the towering cliffside fortresses of San Marino and wrapped up the trip with two high-octane, adrenaline-fueled days conquering the massive roller coasters at Mirabilandia. Sun, history, and pure theme park speed.',
-    },
-    accommodation: [
-      {
-        name: "Astoria Prestige Apartments - BOLOGNA", 
-        url: "https://www.tripadvisor.ie/Hotel_Review-g187801-d34310223-Reviews-Astoria_Prestige_Apartments-Bologna_Province_of_Bologna_Emilia_Romagna.html"
-      },
-      {
-        name: "Residence Ten Suite - RIMINI", 
-        url: "https://www.tripadvisor.com/Hotel_Review-g187807-d10272014-Reviews-Residence_Ten_Suite-Rimini_Province_of_Rimini_Emilia_Romagna.html"
-      },
-    ],
-    
+  id: '2025-srilanka',
+  cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-SRILANKA',
+  title: 'Sri Lanka',
+  location: {
+    cz: 'Srí Lanka',
+    en: 'Sri Lanka',
   },
+  year: 2025,
+  dates: {
+    cz: 'Duben 2025',
+    en: 'April 2025',
+  },
+  days: 7,
+  summary: {
+    cz: 'Exotická kombinace odpočinku na tropických plážích Hikkaduwy a objevování buddhistické kultury i zelených kopců v Kandy.',
+    en: 'An exotic mix of relaxing days on the tropical beaches of Hikkaduwa and exploring Buddhist culture and green hills in Kandy.',
+  },
+  intro: {
+    cz: 'Nezapomenutelný týden na Srí Lance. Začali jsme na pobřeží v Hikkaduwě relaxem na tropických plážích, pozorováním mořských želv a surfováním, načež jsme zamířili do vnitrozemí do historického Kandy obklopeného malebnými kopci a chrámy.',
+    en: 'An unforgettable week in Sri Lanka. We started on the coast of Hikkaduwa with tropical beaches, sea turtles, and ocean waves, before heading inland to historic Kandy surrounded by scenic hills and sacred temples.',
+  },
+  accommodation: [
+    {
+      name: "Hikka Tranz by Cinnamon - HIKKADUWA", 
+      url: "https://www.tripadvisor.com/Hotel_Review-g304134-d579245-Reviews-Hikka_Tranz_by_Cinnamon-Hikkaduwa_Galle_District_Southern_Province.html"
+    },
+    {
+      name: "Sevana City Hotel - KANDY", 
+      url: "https://www.tripadvisor.com/Hotel_Review-g304138-d1541208-Reviews-Sevana_City_Hotel-Kandy_Kandy_District_Central_Province.html"
+    },
+  ],
+},
   {
   id: '2025-luxembourg',
   cloudinaryFolder: 'MY-TRAVEL-BLOG/2025-LUXEMBOURG',
